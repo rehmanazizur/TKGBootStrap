@@ -65,7 +65,7 @@ echo "installed tanzu plugins!!"
 mkdir /ubuntu/home/tkg
 cd /ubuntu/home/tkg
 curl https://github.com/rehmanazizur/TKGBootStrap/blob/main/kubectl-linux-v1.27.5%2Bvmware.1.gz
-echo "downloaded kubectl-linux-v1.28.4+vmware.1.gz"
-gunzip kubectl-linux-v1.28.4+vmware.1.gz
-chmod ugo+x kubectl-linux-v1.28.4+vmware.1
-sudo install kubectl-linux-v1.28.4+vmware.1 /usr/local/bin/kubectl
+echo "downloaded kubectl-linux-v1.27.5%2Bvmware.1.gz"
+gunzip kubectl-linux-v1.27.5+vmware.1.gz
+chmod ugo+x kubectl-linux-v1.27.5+vmware.1
+sudo install kubectl-linux-v1.27.5+vmware.1 /usr/local/bin/kubectl
