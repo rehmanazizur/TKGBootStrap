@@ -18,11 +18,11 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
-mkdir /etc/docker/daemon.json
+cat /etc/docker/daemon.json
 echo \
 "{
     "exec-opts": ["native.cgroupdriver=systemd"]
-}"
+}" >| /etc/docker/daemon.json
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ipv4.conf.all.rp_filter = 0
