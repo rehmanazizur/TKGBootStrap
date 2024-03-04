@@ -1,0 +1,16 @@
+Run each command one by one to validate the installation
+
+docker run hello-world
+Expected output: This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
+
+tanzu plugin list
+NAME                TARGET      VERSION
+isolated-cluster    global      v0.32.0
+management-cluster  kubernetes  v0.32.0
+package             kubernetes  v0.32.0
+pinniped-auth       global      v0.32.0
+secret              kubernetes  v0.32.0
+telemetry           kubernetes  v0.32.0
+
+kubectl version
+this command should return the kubectl version
