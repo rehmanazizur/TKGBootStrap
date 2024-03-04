@@ -36,3 +36,9 @@ echo "deb [signed-by=/etc/apt/keyrings/tanzu-archive-keyring.gpg] https://storag
 sudo apt update
 sudo apt install tanzu-cli=1.1.0
 tanzu plugin install --group vmware-tkg/default:v2.5.0
+mkdir /ubuntu/home/tkg
+cd /ubuntu/home/tkg
+curl https://github.com/rehmanazizur/TKGBootStrap/blob/main/kubectl-linux-v1.27.5%2Bvmware.1.gz
+gunzip kubectl-linux-v1.28.4+vmware.1.gz
+chmod ugo+x kubectl-linux-v1.28.4+vmware.1
+sudo install kubectl-linux-v1.28.4+vmware.1 /usr/local/bin/kubectl
