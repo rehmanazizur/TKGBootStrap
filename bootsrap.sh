@@ -1,18 +1,18 @@
-sudo apt update -y
+echo "Updating system!!"
+sudo apt update -y &> /dev/null;;
 echo "Update Completed!!"
-sudo apt upgrade -y
 
-echo "Upgrade Completed!!"
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+echo "Removing old packages now!!"
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done &> /dev/null;
 
 echo "Removed Old packages!!"
 
 # Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo apt-get update -y &> /dev/null;
+sudo apt-get install ca-certificates curl &> /dev/null;
+sudo install -m 0755 -d /etc/apt/keyrings &> /dev/null;
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc &> /dev/null;
+sudo chmod a+r /etc/apt/keyrings/docker.asc &> /dev/null;
 
 echo "Added Docker's official GPG key"
 
@@ -23,17 +23,21 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "Added the repository to Apt sources"
 
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+echo "Update after adding repository!!"
+sudo apt-get update &> /dev/null;
+
+echo "installing docker.."
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin &> /dev/null;
 echo "Installed docker!!"
 
-sudo groupadd docker || true
-sudo usermod -aG docker $USER
-newgrp docker
+echo "adding current user to docker group."
+sudo usermod -aG docker $USER &> /dev/null;
+newgrp docker &> /dev/null;
 
 echo "Added current user to docker group!"
 
-cat /etc/docker/daemon.json
+echo "creating file /etc/docker/daemon.json"
+cat /etc/docker/daemon.json &> /dev/null;
 
 echo "created /etc/docker/daemon.json file"
 echo \
@@ -43,29 +47,39 @@ echo \
 
 echo "added below contents to /etc/docker/daemon.json"
 cat /etc/docker/daemon.jso
-sudo systemctl daemon-reload
-sudo systemctl restart docker
+sudo systemctl daemon-reload &> /dev/null;
+sudo systemctl restart docker &> /dev/null;
 
 echo "docker service restarted!"
 ipv4.conf.all.rp_filter = 0
 sudo sysctl net/netfilter/nf_conntrack_max=131072
 sudo modprobe nf_conntrack
-sudo apt update
+
+echo "update system after the changes"
+sudo apt update -y &> /dev/null;
 sudo apt install -y ca-certificates curl gpg
-sudo mkdir -p /etc/apt/keyrings
+sudo mkdir -p /etc/apt/keyrings &> /dev/null;
 curl -fsSL https://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub | sudo gpg --dearmor -o /etc/apt/keyrings/tanzu-archive-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/tanzu-archive-keyring.gpg] https://storage.googleapis.com/tanzu-cli-os-packages/apt tanzu-cli-jessie main" | sudo tee /etc/apt/sources.list.d/tanzu.list
-sudo apt update
-sudo apt install tanzu-cli=1.1.0
 
-echo "install Tanzu Cli 1.1.0"
-tanzu plugin install --group vmware-tkg/default:v2.5.0
+echo "update again after adding new repos.."
+
+sudo apt update -y &> /dev/null;
+
+echo "Installing tanzu-cli=1.1.0"
+sudo apt install tanzu-cli=1.1.0 &> /dev/null;
+
+echo "installed Tanzu Cli 1.1.0"
+
+echo "Installing tanzu plugins."
+tanzu plugin install --group vmware-tkg/default:v2.5.0 &> /dev/null;
 
 echo "installed tanzu plugins!!"
-mkdir /ubuntu/home/tkg
-cd /ubuntu/home/tkg
-curl https://github.com/rehmanazizur/TKGBootStrap/blob/main/kubectl-linux-v1.27.5%2Bvmware.1.gz
-echo "downloaded kubectl-linux-v1.27.5%2Bvmware.1.gz"
+
+echo "install kubectl.."
 gunzip kubectl-linux-v1.27.5+vmware.1.gz
 chmod ugo+x kubectl-linux-v1.27.5+vmware.1
 sudo install kubectl-linux-v1.27.5+vmware.1 /usr/local/bin/kubectl
+
+echo "You machine is ready. Please type the command tanzu mc create -b <ip of your bootstrap VM> --ui --browser none"
+ehco "Happy installing TKG!!"
