@@ -33,7 +33,7 @@ echo "Installed docker!!"
 
 echo "adding current user to docker group."
 sudo usermod -aG docker $USER &> /dev/null;
-newgrp docker &> /dev/null;
+newgrp docker
 
 echo "Added current user to docker group!"
 
