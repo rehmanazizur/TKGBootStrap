@@ -7,6 +7,7 @@ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker c
 
 echo "Removed Old packages!!"
 
+ehco "Updating System.."
 # Add Docker's official GPG key:
 sudo apt-get update -y &> /dev/null;
 sudo apt-get install ca-certificates curl &> /dev/null;
